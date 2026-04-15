@@ -286,6 +286,19 @@ config PINCTRL_INGENIC
 	select GPIOLIB_IRQCHIP
 	select REGMAP_MMIO
 
+config PINCTRL_INGENIC_XBURST
+	bool "Pinctrl driver for Ingenic XBurst SoCs (T31/T32/T40/T41)"
+	default MACH_XBURST
+	depends on OF
+	depends on MACH_XBURST || COMPILE_TEST
+	select PINMUX
+	select GENERIC_PINCONF
+	select GPIOLIB
+	help
+	  Support for pin control on Ingenic XBurst-based SoCs including
+	  T31, T32 (PRJ007), T40 and T41 (PRJ008) families. This is the
+	  vendor pinctrl driver ported from the Ingenic SDK kernel.
+
 config PINCTRL_K210
 	bool "Pinctrl driver for the Canaan Kendryte K210 SoC"
 	depends on RISCV && SOC_CANAAN_K210 || COMPILE_TEST

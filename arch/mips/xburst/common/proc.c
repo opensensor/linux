@@ -39,7 +39,7 @@ static int jz_proc_show(struct seq_file *filq, void *v)
 }
 static int jz_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, jz_proc_show, PDE_DATA(inode));
+	return single_open(file, jz_proc_show, pde_data(inode));
 }
 static ssize_t jz_proc_write(struct file *file, const char __user *buffer, size_t usize, loff_t *off)
 {

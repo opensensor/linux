@@ -80,7 +80,7 @@ static int cpu_proc_show(struct seq_file *m, void *v)
 
 static int cpu_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, cpu_proc_show, PDE_DATA(inode));
+	return single_open(file, cpu_proc_show, pde_data(inode));
 }
 static const struct proc_ops cpu_proc_fops ={
 	.proc_read = seq_read,

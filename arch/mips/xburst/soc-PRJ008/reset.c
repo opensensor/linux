@@ -324,7 +324,7 @@ static int reset_write(struct file *file, const char __user *buffer,
 
 static int reset_open(struct inode *inode, struct file *file)
 {
-	return single_open_size(file, reset_show, PDE_DATA(inode), 1024);
+	return single_open_size(file, reset_show, pde_data(inode), 1024);
 }
 
 static struct proc_ops reset_proc_ops = {
@@ -365,7 +365,7 @@ static int type_write_proc(struct file *file, const char __user *buffer,
 
 static int reset_open_proc(struct inode *inode, struct file *file)
 {
-	return single_open_size(file, type_proc_show, PDE_DATA(inode), 1024);
+	return single_open_size(file, type_proc_show, pde_data(inode), 1024);
 }
 
 static struct proc_ops type_proc_ops ={

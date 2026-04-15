@@ -77,8 +77,11 @@ struct bcache_ops *bcops = &no_sc_ops;
 
 /* DMA cache operations. */
 void (*_dma_cache_wback_inv)(unsigned long start, unsigned long size);
+EXPORT_SYMBOL(_dma_cache_wback_inv);
 void (*_dma_cache_wback)(unsigned long start, unsigned long size);
+EXPORT_SYMBOL(_dma_cache_wback);
 void (*_dma_cache_inv)(unsigned long start, unsigned long size);
+EXPORT_SYMBOL(_dma_cache_inv);
 
 #endif /* CONFIG_DMA_NONCOHERENT */
 

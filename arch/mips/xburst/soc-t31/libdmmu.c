@@ -588,7 +588,7 @@ static int dmmu_make_present(unsigned long addr,unsigned long end)
 	vma->vm_page_prot = __pgprot(vm_page_prot | _PAGE_VALID| _PAGE_ACCESSED | _PAGE_PRESENT);
 
 	len = DIV_ROUND_UP(end, PAGE_SIZE) - addr/PAGE_SIZE;
-	ret = get_user_pages(addr, len, write, NULL, NULL);
+	ret = get_user_pages(addr, len, write, NULL);
 	vma->vm_page_prot = __pgprot(vm_page_prot);
 	if (ret < 0) {
 		printk("dmmu_make_present get_user_pages error(%d). addr=%lx len=%lx\n",0-ret,addr,end-addr);
@@ -874,7 +874,7 @@ static int dmmu_proc_show(struct seq_file *m, void *v)
 
 static int dmmu_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, dmmu_proc_show, PDE_DATA(inode));
+	return single_open(file, dmmu_proc_show, pde_data(inode));
 }
 
 static const struct proc_ops dmmus_proc_fops ={

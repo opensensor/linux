@@ -93,7 +93,7 @@ static int pmon_proc_show(struct seq_file *m, void *v)
 
 static int pmon_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, pmon_proc_show, PDE_DATA(inode));
+	return single_open(file, pmon_proc_show, pde_data(inode));
 }
 
 static int pmon_write_proc(struct file *file, const char __user *buffer,

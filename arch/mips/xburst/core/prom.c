@@ -80,7 +80,9 @@ const char *get_system_type(void)
 	return "xburst1-based";
 }
 
+#if defined(CONFIG_XBURST_MXUV2)
 noinline struct xburst_cop2_state *get_current_cp2(void)
 {
 	return &(current->thread.cp2);
 }
+#endif

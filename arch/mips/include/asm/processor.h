@@ -152,7 +152,28 @@ union mips_watch_reg_state {
 	struct mips3264_watch_reg_state mips3264;
 };
 
-#if defined(CONFIG_CPU_CAVIUM_OCTEON)
+#ifdef CONFIG_MACH_XBURST
+#define NUM_MXU_REGS	32
+struct xburst_mxu_struct {
+	unsigned int regs[NUM_MXU_REGS][16];
+	unsigned int csr;
+};
+#endif
+
+#if defined(CONFIG_XBURST_MXUV2)
+typedef union {
+	u32 val32[4];
+	u64 val64[2];
+} vpr_t;
+
+struct xburst_cop2_state {
+	u32 mxu_csr;
+	vpr_t vr[32];
+};
+#define COP2_INIT						\
+	.cp2			= {0,},
+
+#elif defined(CONFIG_CPU_CAVIUM_OCTEON)
 
 struct octeon_cop2_state {
 	/* DMFC2 rt, 0x0201 */
@@ -263,7 +284,13 @@ struct thread_struct {
 	unsigned long cp0_baduaddr;	/* Last kernel fault accessing USEG */
 	unsigned long error_code;
 	unsigned long trap_nr;
-#ifdef CONFIG_CPU_CAVIUM_OCTEON
+#ifdef CONFIG_MACH_XBURST
+	/* Saved MXU registers, if available. */
+	__attribute__((aligned(16))) struct xburst_mxu_struct mxu;
+#endif
+#if defined(CONFIG_XBURST_MXUV2)
+	struct xburst_cop2_state cp2;
+#elif defined(CONFIG_CPU_CAVIUM_OCTEON)
 	struct octeon_cop2_state cp2 __attribute__ ((__aligned__(128)));
 #if defined(CONFIG_CAVIUM_OCTEON_CVMSEG_SIZE) && \
 	CONFIG_CAVIUM_OCTEON_CVMSEG_SIZE > 0

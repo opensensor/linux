@@ -1,6 +1,7 @@
 #include <asm/processor.h>
 #include <asm/ptrace.h>
 #include <linux/sched.h>
+#include <linux/sched/task_stack.h>
 #include <mxu.h>
 
 void __save_mxu(void *tsk_void)

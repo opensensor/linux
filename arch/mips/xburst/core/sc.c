@@ -133,13 +133,6 @@ static inline int __init mips_sc_probe(void)
 		return 0;
 	}
 
-	switch (c->processor_id & PRID_CPU_FEATURE_MASK) {
-	case PRID_CPU_X2000:
-		break;
-	default:
-		printk("pls check processor_id[0x%08x],sc_jz not support!\n",c->processor_id);
-	}
-
 	/* Does this MIPS32/MIPS64 CPU have a config2 register? */
 	config1 = read_c0_config1();
 	if (!(config1 & MIPS_CONF_M))

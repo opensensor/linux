@@ -24,7 +24,7 @@
 #define cpu_has_3k_cache                0
 #define cpu_has_4k_cache                1
 #define cpu_has_tx39_cache              0
-#define cpu_has_fpu                     1
+/* cpu_has_fpu must not be forced non-zero; use runtime detection */
 #define cpu_has_32fpr                   1
 #define cpu_has_counter                 0
 #define cpu_has_watch                   1

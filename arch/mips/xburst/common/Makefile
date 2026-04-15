@@ -8,3 +8,4 @@ obj-y += proc.o
 obj-y += mxu.o
 obj-y += jz_notifier.o
 #obj-y += initrd-check.o
+obj-y += libgcc_compat.o
