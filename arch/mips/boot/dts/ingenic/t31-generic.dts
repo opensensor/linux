@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+
+#include "t31.dtsi"
+
+/ {
+	compatible = "thingino,t31-generic", "ingenic,t31";
+	model = "Thingino T31 Generic Board";
+
+	aliases {
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x4000000>;	/* 64 MB */
+	};
+};
+
+&exclk {
+	clock-frequency = <24000000>;
+};
+
+&uart0 {
+	status = "okay";
+};
+
+&uart1 {
+	status = "okay";
+};
+
+&msc0 {
+	status = "okay";
+	bus-width = <4>;
+};
+
+&sfc0 {
+	status = "okay";
+};
+
+&otg_phy {
+	status = "okay";
+};
+
+&otg {
+	status = "okay";
+};
