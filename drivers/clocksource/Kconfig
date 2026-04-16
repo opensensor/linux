@@ -720,6 +720,13 @@ config INGENIC_TIMER
 	help
 	  Support for the timer/counter unit of the Ingenic JZ SoCs.
 
+config CLKSRC_INGENIC_SYS_OST
+	bool "Clocksource/timer using the vendor SYS-OST in Ingenic T31/PRJ SoCs"
+	depends on MACH_XBURST
+	select TIMER_OF
+	help
+	  Vendor clocksource/timer driver for Ingenic T31 and related SoCs.
+
 config INGENIC_SYSOST
 	bool "Clocksource/timer using the SYSOST in Ingenic X SoCs"
 	depends on MIPS || COMPILE_TEST

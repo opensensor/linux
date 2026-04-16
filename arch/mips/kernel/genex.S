@@ -578,7 +578,11 @@ NESTED(nmi_handler, PT_SIZE, sp)
 #ifdef CONFIG_MIPS_FP_SUPPORT
 	BUILD_HANDLER fpe fpe fpe silent		/* #15 */
 #endif
+#ifdef CONFIG_XBURST_MXUV2
+	BUILD_HANDLER mfpe mfpe none silent		/* #16 */
+#else
 	BUILD_HANDLER ftlb ftlb none silent		/* #16 */
+#endif
 	BUILD_HANDLER gsexc gsexc gsexc silent		/* #16 */
 	BUILD_HANDLER msa msa sti silent		/* #21 */
 	BUILD_HANDLER mdmx mdmx sti silent		/* #22 */

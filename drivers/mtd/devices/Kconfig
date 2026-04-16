@@ -224,4 +224,14 @@ config BCH_CONST_T
 	default 4
 endif
 
+config INGENIC_SFC
+	tristate "Ingenic SFC driver (v1)"
+	depends on MACH_XBURST
+	help
+	  SFC driver for Ingenic T31 and related SoCs.
+
+config MTD_INGENIC_SFC_NORFLASH
+	bool "Support ingenic sfc-nor (v1)"
+	depends on INGENIC_SFC
+
 endmenu

@@ -93,7 +93,11 @@ extern asmlinkage void handle_ov(void);
 extern asmlinkage void handle_tr(void);
 extern asmlinkage void handle_msa_fpe(void);
 extern asmlinkage void handle_fpe(void);
+#ifdef CONFIG_XBURST_MXUV2
+extern asmlinkage void handle_mfpe(void);
+#else
 extern asmlinkage void handle_ftlb(void);
+#endif
 extern asmlinkage void handle_gsexc(void);
 extern asmlinkage void handle_msa(void);
 extern asmlinkage void handle_mdmx(void);
@@ -965,6 +969,14 @@ static int simulate_fp(struct pt_regs *regs, unsigned int opcode,
 }
 
 #endif /* !CONFIG_MIPS_FP_SUPPORT */
+
+#ifdef CONFIG_MACH_XBURST
+asmlinkage void do_mfpe(struct pt_regs * regs)
+{
+	die_if_kernel("Kernel bug detected", regs);
+	force_sig(SIGILL);
+}
+#endif
 
 void do_trap_or_bp(struct pt_regs *regs, unsigned int code, int si_code,
 	const char *str)
@@ -2463,8 +2475,13 @@ void __init trap_init(void)
 	if (cpu_has_fpu && !cpu_has_nofpuex)
 		set_except_vector(EXCCODE_FPE, handle_fpe);
 
+#ifdef CONFIG_XBURST_MXUV2
+	if(cpu_has_mxu_v2)
+		set_except_vector(16, handle_mfpe);
+#else
 	if (cpu_has_ftlbparex)
 		set_except_vector(MIPS_EXCCODE_TLBPAR, handle_ftlb);
+#endif
 
 	if (cpu_has_gsexcex)
 		set_except_vector(LOONGSON_EXCCODE_GSEXC, handle_gsexc);

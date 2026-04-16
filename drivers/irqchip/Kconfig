@@ -397,6 +397,16 @@ config MIPS_GIC
 	select IRQ_DOMAIN_HIERARCHY
 	select MIPS_CM
 
+config INGENIC_INTC
+	bool
+	select IRQ_DOMAIN
+
+config IRQ_INGENIC_CPU
+	bool
+	select IRQ_DOMAIN
+	help
+	  Support for Ingenic XBurst CPU core IRQ handler.
+
 config INGENIC_IRQ
 	bool
 	depends on MACH_INGENIC

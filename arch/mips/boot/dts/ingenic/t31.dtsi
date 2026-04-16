@@ -302,8 +302,8 @@
 	};
 
 	dtrng: trng@10072000 {
-		compatible = "ingenic,t31-dtrng";
-		reg = <0x10072000 0xc>;
+		compatible = "ingenic,t31-dtrng", "ingenic,x1830-dtrng";
+		reg = <0x10072000 0x100>;
 
 		clocks = <&cgu T31_CLK_GATE_DTRNG>;
 
@@ -381,6 +381,8 @@
 		clock-names = "stmmaceth";
 
 		mode-reg = <&mac_phy_ctrl>;
+
+		snps,clk-csr = <4>;
 
 		status = "disabled";
 

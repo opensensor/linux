@@ -1424,6 +1424,28 @@ config SERIAL_STM32_CONSOLE
 	select SERIAL_CORE_CONSOLE
 	select SERIAL_EARLYCON
 
+config SERIAL_INGENIC_UART
+	tristate "Ingenic serial port support"
+	select SERIAL_CORE
+	help
+	  If you have a machine based on an XBurst MIPS SoC you can
+	  enable its onboard serial port by enabling this option.
+
+config SERIAL_INGENIC_CONSOLE
+	bool "Console on Ingenic SoC serial port"
+	depends on SERIAL_INGENIC_UART=y
+	select SERIAL_CORE_CONSOLE
+
+config SERIAL_INGENIC_LARGE_BAUDRATE
+	bool "Ingenic baudrate support greater than 1M"
+	depends on SERIAL_INGENIC_UART=y
+	default y
+
+config SERIAL_INGENIC_MAGIC_SYSRQ
+	bool "Ingenic UART Magic SysRq key"
+	depends on MAGIC_SYSRQ=y && SERIAL_INGENIC_UART=y
+	default n
+
 config SERIAL_MVEBU_UART
 	bool "Marvell EBU serial port support"
 	depends on ARCH_MVEBU || COMPILE_TEST

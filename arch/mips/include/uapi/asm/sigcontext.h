@@ -50,6 +50,7 @@ struct sigcontext {
 	unsigned long		sc_lo2;
 	unsigned long		sc_hi3;
 	unsigned long		sc_lo3;
+	unsigned long		sc_mxu[16];
 };
 
 #endif /* _MIPS_SIM == _MIPS_SIM_ABI32 */

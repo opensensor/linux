@@ -21,4 +21,6 @@ obj-$(CONFIG_MTD_POWERNV_FLASH)	+= powernv_flash.o
 obj-$(CONFIG_MTD_INTEL_DG)	+= mtd_intel_dg.o
 
 
+obj-$(CONFIG_INGENIC_SFC)	+= ingenic_sfc_v1/
+
 CFLAGS_docg3.o			+= -I$(src)

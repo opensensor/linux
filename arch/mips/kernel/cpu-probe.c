@@ -1749,6 +1749,9 @@ static inline void cpu_probe_loongson(struct cpuinfo_mips *c, unsigned int cpu)
 static inline void cpu_probe_loongson(struct cpuinfo_mips *c, unsigned int cpu) { }
 #endif
 
+#ifdef CONFIG_XBURST_MXUV2
+extern int soc_support_mxuv2(void);
+#endif
 static inline void cpu_probe_ingenic(struct cpuinfo_mips *c, unsigned int cpu)
 {
 	decode_configs(c);
@@ -1820,6 +1823,13 @@ static inline void cpu_probe_ingenic(struct cpuinfo_mips *c, unsigned int cpu)
 		c->writecombine = _CACHE_CACHABLE_WA;
 		c->cputype = CPU_XBURST;
 		__cpu_name[cpu] = "Ingenic XBurst";
+#ifdef CONFIG_XBURST_MXUV2
+		if(soc_support_mxuv2()) {
+			c->ases |= MIPS_ASE_XBURSTMXUV2;
+		} else {
+		//c->ases |= MIPS_ASE_XBURSTMXU;
+	}
+#endif
 		break;
 
 	/* XBurst®2 with MXU2.1 SIMD ISA */

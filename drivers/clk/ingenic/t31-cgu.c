@@ -354,9 +354,9 @@ static const struct ingenic_cgu_clk_info t31_cgu_clocks[] = {
 	},
 
 	[T31_CLK_GATE_TCU] = {
-		"tcu", CGU_CLK_GATE,
-		.flags = CLK_IGNORE_UNUSED,
-		.parents = { T31_CLK_PCLK, -1, -1, -1 },
+		"tcu_gate", CGU_CLK_GATE,
+		.flags = CLK_IS_CRITICAL,
+		.parents = { T31_CLK_EXCLK, -1, -1, -1 },
 		.gate = { CGU_REG_CLKGR0, 30 },
 	},
 
@@ -519,8 +519,8 @@ static const struct ingenic_cgu_clk_info t31_cgu_clocks[] = {
 	},
 
 	[T31_CLK_GATE_OST] = {
-		"ost", CGU_CLK_GATE,
-		.flags = CLK_IGNORE_UNUSED,
+		"ost_gate", CGU_CLK_GATE,
+		.flags = CLK_IS_CRITICAL,
 		.parents = { T31_CLK_EXCLK, -1, -1, -1 },
 		.gate = { CGU_REG_CLKGR1, 11 },
 	},

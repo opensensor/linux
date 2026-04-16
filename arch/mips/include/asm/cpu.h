@@ -439,5 +439,7 @@ enum cpu_type_enum {
 #define MIPS_ASE_LOONGSON_CAM	0x00001000 /* Loongson CAM */
 #define MIPS_ASE_LOONGSON_EXT	0x00002000 /* Loongson EXTensions */
 #define MIPS_ASE_LOONGSON_EXT2	0x00004000 /* Loongson EXTensions R2 */
+#define MIPS_ASE_XBURSTMXU	0x80000000 /* CPU supports XBURST MXU */
+#define MIPS_ASE_XBURSTMXUV2	0x40000000 /* CPU supports XBURST MXUV2 */
 
 #endif /* _ASM_CPU_H */

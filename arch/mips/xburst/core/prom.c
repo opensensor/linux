@@ -85,4 +85,23 @@ noinline struct xburst_cop2_state *get_current_cp2(void)
 {
 	return &(current->thread.cp2);
 }
+
+/*
+ * Stubs for MXU v2 COP2 support.
+ * The real implementations are in mxu-v2-ex.obj (vendor blob),
+ * but that blob uses init_timer_key which was removed in 4.15+.
+ * T31 (XBurst1) does not have MXU v2, so these are safe no-ops.
+ */
+int soc_support_mxuv2(void)
+{
+	return 0;
+}
+
+void xburst_cop2_save(struct xburst_cop2_state *state)
+{
+}
+
+void xburst_cop2_restore(struct xburst_cop2_state *state)
+{
+}
 #endif

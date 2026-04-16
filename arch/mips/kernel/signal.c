@@ -468,7 +468,17 @@ int setup_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc)
 	 * will "inherit" current FPU state.
 	 */
 	err |= protected_save_fp_context(sc);
-
+#if 0
+#ifdef CONFIG_MACH_XBURST
+	if (cpu_has_mxu) {
+		unsigned int *regs;
+		regs = __get_mxu_regs(current);
+		for (i = 0; i < NUM_MXU_REGS; i++){
+			err |= __put_user(regs[i], &sc->sc_mxu[i]);
+		}
+	}
+#endif
+#endif
 	return err;
 }
 
@@ -542,6 +552,17 @@ int restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc)
 	for (i = 1; i < 32; i++)
 		err |= __get_user(regs->regs[i], &sc->sc_regs[i]);
 
+#if 0
+#ifdef CONFIG_MACH_XBURST
+	if (cpu_has_mxu) {
+		unsigned int regs[NUM_MXU_REGS];
+		for (i = 0; i < NUM_MXU_REGS; i++){
+			err |= __get_user(regs[i], &sc->sc_mxu[i]);
+		}
+		__let_mxu_regs(current,regs);
+	}
+#endif
+#endif
 	return err ?: protected_restore_fp_context(sc);
 }
 

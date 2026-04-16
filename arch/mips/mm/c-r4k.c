@@ -95,9 +95,11 @@ static inline void r4k_on_each_cpu(unsigned int type,
 				   void (*func)(void *info), void *info)
 {
 	preempt_disable();
+#ifndef CONFIG_MACH_XBURST2
 	if (r4k_op_needs_ipi(type))
 		smp_call_function_many(&cpu_foreign_map[smp_processor_id()],
 				       func, info, 1);
+#endif
 	func(info);
 	preempt_enable();
 }
@@ -774,7 +776,11 @@ static void r4k_dma_cache_wback_inv(unsigned long addr, unsigned long size)
 	 * we have to use the HIT-type alternative as IPI cannot be used
 	 * here due to interrupts possibly being disabled.
 	 */
+#ifndef CONFIG_MACH_XBURST2
 	if (!r4k_op_needs_ipi(R4K_INDEX) && size >= dcache_size) {
+#else
+	if(size >= dcache_size) {
+#endif
 		r4k_blast_dcache();
 	} else {
 		R4600_HIT_CACHEOP_WAR_IMPL;
@@ -844,10 +850,28 @@ static void r4k_dma_cache_inv(unsigned long addr, unsigned long size)
 		return;
 	}
 
+#ifndef CONFIG_MACH_XBURST2
 	if (!r4k_op_needs_ipi(R4K_INDEX) && size >= dcache_size) {
+#else
+	if(size >= dcache_size) {
+#endif
+
 		r4k_blast_dcache();
 	} else {
+#if defined(CONFIG_MACH_XBURST) || defined(CONFIG_MACH_XBURST2)
+		unsigned long lsize = cpu_dcache_line_size();
+		unsigned long cmask = (lsize - 1);
+		unsigned long lmask = ~(cmask);
+#endif
 		R4600_HIT_CACHEOP_WAR_IMPL;
+#if defined(CONFIG_MACH_XBURST) || defined(CONFIG_MACH_XBURST2)
+		if (addr & cmask) {
+			cache_op(Hit_Writeback_Inv_D, addr & lmask);
+		}
+		if ((addr + size) & cmask) {
+			cache_op(Hit_Writeback_Inv_D, (addr + size - 1) & lmask);
+		}
+#endif
 		blast_inv_dcache_range(addr, addr + size);
 	}
 	preempt_enable();
@@ -1547,6 +1571,15 @@ static void setup_scache(void)
 				    MIPS_CPU_ISA_M32R2 | MIPS_CPU_ISA_M64R2 |
 				    MIPS_CPU_ISA_M32R5 | MIPS_CPU_ISA_M64R5 |
 				    MIPS_CPU_ISA_M32R6 | MIPS_CPU_ISA_M64R6)) {
+#ifdef CONFIG_XBURST_CPU_SCACHE
+			{
+				extern int ingenic_sc_init(void);
+				if (ingenic_sc_init()) {
+					scache_size = c->scache.ways * c->scache.sets * c->scache.linesz;
+					return;
+				}
+			}
+#endif
 #ifdef CONFIG_MIPS_CPU_SCACHE
 			if (mips_sc_init ()) {
 				scache_size = c->scache.ways * c->scache.sets * c->scache.linesz;

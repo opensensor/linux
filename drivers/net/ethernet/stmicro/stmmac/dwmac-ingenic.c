@@ -264,6 +264,7 @@ static const struct of_device_id ingenic_mac_of_matches[] = {
 	{ .compatible = "ingenic,x1000-mac", .data = &x1000_soc_info },
 	{ .compatible = "ingenic,x1600-mac", .data = &x1600_soc_info },
 	{ .compatible = "ingenic,x1830-mac", .data = &x1830_soc_info },
+	{ .compatible = "ingenic,t31-mac", .data = &x1830_soc_info },
 	{ .compatible = "ingenic,x2000-mac", .data = &x2000_soc_info },
 	{ }
 };
